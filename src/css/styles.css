@@ -16,3 +16,85 @@
 @import url('./badges.css');
 @import url('./back-link.css');
 @import url('./footer.css');
+
+
+body {
+  width: 100vh;
+  background-color: lightblue;
+  font-size: 20px;
+  color: darkviolet;
+}
+
+form {
+
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 7px;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.btn {
+  background-color: lightgreen;
+}
+
+.filter {
+  background: #f3f4f6;
+  color: #374151;
+  border: none;
+}
+
+.filter:active {
+   background: #3b82f6;
+  color: white;
+}
+
+.filter:hover {
+  background: #e5e7eb;
+  
+}
+
+.filter:active:hover:focus {
+  background: #2563eb;
+}
+
+.list li {
+  background-color: gold;
+}
+
+.completed span {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.completed {
+  background-color: #d4edda;
+}
+
+.edit__btn {
+  background-color: #3b82f6;
+  margin-left: 20px;
+}
+
+.edit-input {
+    padding: 3px;
+    font-size: 16px;
+    /* border: 1px solid #fff; */
+    border-style: none;
+    border-radius: 6px;
+    background-color: transparent;
+}
+
+.delete__btn {
+  background-color: #f87171;
+  margin-left: 10px;
+}
