@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vanilla-app-template/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
-    <script type="module" crossorigin src="/vanilla-app-template/index.js"></script>
-    <link rel="stylesheet" crossorigin href="/vanilla-app-template/assets/styles-DvPDDfy5.css">
-  </head>
-  <body>
-  
-    <main>
-    </main>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO DO</title>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+/>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+  <script type="module" crossorigin src="/vanilla-app-template/index.js"></script>
+  <link rel="stylesheet" crossorigin href="/vanilla-app-template/assets/styles-7BSRGWjt.css">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<body>
+    <form class="form">
+        <input class="input" type="text" >
+        <button class="btn" type="submit">+</button>
+    </form>
+    <div class="filters">
+  <button class="filter filter__all" data-filter="all">All</button>
+  <button class="filter filter__active" data-filter="active">Active</button>
+  <button class="filter filter__completed" data-filter="completed">Completed</button>
+</div>
+    <ul class="list"></ul>
+    <p class="tasks-counter"></p>
+</body>
 </html>
