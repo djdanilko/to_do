@@ -8,24 +8,26 @@ export function renderList(containerSelector, items, filter, callbacks = {}) {
     onClearCompleted = () => {}
   } = callbacks;
 
-  // clear
   container.innerHTML = '';
 
-  // filter
   let filtered = items;
   if (filter === 'active') filtered = items.filter(i => !i.completed);
   if (filter === 'completed') filtered = items.filter(i => i.completed);
 
-  // rerender function passed to task items for escape/cancel scenarios
   const rerender = () => renderList(containerSelector, items, filter, callbacks);
 
-  // render each task item
+  if (!filtered.length) {
+    const empty = document.createElement('li');
+    empty.className = 'empty-state';
+    empty.textContent = getEmptyMessage(filter);
+    container.appendChild(empty);
+  }
+
   filtered.forEach(item => {
     const li = createTaskItem(item, callbacks, rerender);
     container.appendChild(li);
   });
 
-  // clear completed button
   if (filter === 'completed' && items.some(i => i.completed)) {
     const clearBtn = document.createElement('button');
     clearBtn.className = 'clear-completed-btn';
@@ -33,4 +35,10 @@ export function renderList(containerSelector, items, filter, callbacks = {}) {
     clearBtn.addEventListener('click', () => onClearCompleted());
     container.appendChild(clearBtn);
   }
+}
+
+function getEmptyMessage(filter) {
+  if (filter === 'active') return 'No active tasks';
+  if (filter === 'completed') return 'No completed tasks';
+  return 'No tasks yet';
 }

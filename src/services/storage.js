@@ -3,7 +3,8 @@ const KEY = 'tasks';
 export function loadTasks() {
   try {
     const raw = localStorage.getItem(KEY);
-    return raw ? JSON.parse(raw) : [];
+    const tasks = raw ? JSON.parse(raw) : [];
+    return Array.isArray(tasks) ? tasks : [];
   } catch (e) {
     console.error('Failed to load tasks', e);
     return [];

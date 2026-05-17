@@ -19,32 +19,67 @@
 
 
 body {
-  width: 100vh;
-  background-color: lightblue;
-  font-size: 20px;
-  color: darkviolet;
+  min-height: 100vh;
+  margin: 0;
+  background: #f6f7fb;
+  color: #202124;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
 }
 
 form {
-
+  display: flex;
+  gap: 8px;
+  width: min(720px, calc(100% - 32px));
+  margin: 48px auto 16px;
 }
 
 ul {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 button {
   cursor: pointer;
   border: none;
-  border-radius: 7px;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: inherit;
 }
 
 input[type="checkbox"] {
   cursor: pointer;
 }
 
+.input,
+.edit-input,
+.deadline-input,
+.subtask-create-input {
+  min-width: 0;
+  border: 1px solid #d6dbe6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font: inherit;
+  background-color: #fff;
+}
+
+.input {
+  flex: 1;
+}
+
 .btn {
-  background-color: lightgreen;
+  min-width: 44px;
+  background-color: #26895f;
+  color: #fff;
+  font-weight: 700;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  width: min(720px, calc(100% - 32px));
+  margin: 0 auto 16px;
 }
 
 .filter {
@@ -53,48 +88,153 @@ input[type="checkbox"] {
   border: none;
 }
 
-.filter:active {
-   background: #3b82f6;
+.filter.active {
+  background: #315fbd;
   color: white;
 }
 
 .filter:hover {
   background: #e5e7eb;
-  
 }
 
-.filter:active:hover:focus {
-  background: #2563eb;
+.filter.active:hover {
+  background: #284f9f;
 }
 
-.list li {
-  background-color: gold;
+.list {
+  display: grid;
+  gap: 12px;
+  width: min(720px, calc(100% - 32px));
+  margin: 0 auto;
 }
 
-.completed span {
+.task-item,
+.empty-state {
+  border: 1px solid #e1e5ee;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 8px 24px rgba(31, 41, 55, 0.08);
+}
+
+.task-item {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+}
+
+.task-main,
+.subtask-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-text,
+.subtask-text {
+  overflow-wrap: anywhere;
+}
+
+.completed > .task-main .task-text,
+.subtask-item.completed .subtask-text {
   text-decoration: line-through;
   opacity: 0.6;
 }
 
-.completed {
-  background-color: #d4edda;
+.task-item.completed {
+  background-color: #f1fbf5;
 }
 
-.edit__btn {
-  background-color: #3b82f6;
-  margin-left: 20px;
+.task-item.overdue {
+  border-color: #f4b5b5;
 }
 
-.edit-input {
-    padding: 3px;
-    font-size: 16px;
-    /* border: 1px solid #fff; */
-    border-style: none;
-    border-radius: 6px;
-    background-color: transparent;
+.task-actions,
+.subtask-actions,
+.deadline-editor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
-.delete__btn {
+.edit__btn,
+.deadline__btn,
+.subtask__btn,
+.edit-subtask__btn,
+.save-deadline__btn {
+  background-color: #315fbd;
+  color: #fff;
+}
+
+.delete__btn,
+.delete-subtask__btn,
+.delete-deadline__btn,
+.cancel-deadline__btn,
+.clear-completed-btn {
   background-color: #f87171;
-  margin-left: 10px;
+  color: #fff;
+}
+
+.deadline-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding-left: 28px;
+  color: #4b5563;
+}
+
+.deadline-wrapper p {
+  margin: 0;
+}
+
+.overdue-text {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+.subtask-list {
+  display: grid;
+  gap: 8px;
+  padding-left: 28px;
+}
+
+.subtask-item {
+  padding: 8px 0;
+  border-top: 1px solid #eef1f6;
+}
+
+.subtask-create-input,
+.deadline-editor {
+  margin-left: 28px;
+}
+
+.empty-state {
+  padding: 18px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.clear-completed-btn {
+  justify-self: end;
+}
+
+.tasks-counter {
+  width: min(720px, calc(100% - 32px));
+  margin: 16px auto 48px;
+  color: #5f6878;
+}
+
+@media (max-width: 620px) {
+  .task-main,
+  .subtask-item {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .task-actions,
+  .subtask-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
 }

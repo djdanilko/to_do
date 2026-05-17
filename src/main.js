@@ -1,39 +1,48 @@
 import { loadTasks, saveTasks } from './services/storage.js';
 import { renderList as renderTasks } from './components/renderList.js';
 import { createTaskHandlers } from './handlers/taskHandlers.js';
+import { uid } from './utils/uid.js';
 
-// DOM references
 const form = document.querySelector(".form");
 const input = document.querySelector(".input");
-const list = document.querySelector(".list");
 const taskCount = document.querySelector(".tasks-counter");
 const filterButtons = document.querySelectorAll("[data-filter]");
 
-// State
-let array = [];
+let tasks = [];
 let filter = "all";
 
-// Load initial data
-const saved = loadTasks();
-if (saved && Array.isArray(saved)) {
-  array.push(...saved);
+function normalizeTask(task) {
+  return {
+    id: task.id || uid(),
+    text: typeof task.text === 'string' ? task.text : '',
+    completed: Boolean(task.completed),
+    deadline: task.deadline || null,
+    subtasks: Array.isArray(task.subtasks)
+      ? task.subtasks.map(subtask => ({
+          id: subtask.id || uid(),
+          text: typeof subtask.text === 'string' ? subtask.text : '',
+          completed: Boolean(subtask.completed)
+        })).filter(subtask => subtask.text)
+      : []
+  };
 }
 
-// Render wrapper
+tasks = loadTasks().map(normalizeTask).filter(task => task.text);
+saveTasks(tasks);
+
 function renderList() {
-  const callbacks = createTaskHandlers(array, renderList);
-  renderTasks('.list', array, filter, callbacks);
+  const callbacks = createTaskHandlers(tasks, renderList);
+  renderTasks('.list', tasks, filter, callbacks);
   updateTaskCount();
 }
 
-// Update task counter
 function updateTaskCount() {
-  const active = array.filter(i => !i.completed).length;
+  if (!taskCount) return;
+  const active = tasks.filter(task => !task.completed).length;
   const text = active === 1 ? 'task' : 'tasks';
   taskCount.textContent = `${active} ${text} left`;
 }
 
-// Filter buttons
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     filter = btn.dataset.filter;
@@ -43,25 +52,29 @@ filterButtons.forEach(btn => {
   });
 });
 
-// Form submit
-form.addEventListener("submit", evt => {
-  evt.preventDefault();
-  const text = input.value.trim();
-  if (!text) return;
-  
-  array.push({
-    id: Date.now(),
-    text,
-    completed: false,
-    deadline: null,
-    subtasks: []
-  });
-  
-  saveTasks(array);
-  renderList();
-  input.value = "";
-  input.focus();
-});
+if (filterButtons[0]) {
+  filterButtons[0].classList.add('active');
+}
 
-// Initial render
+if (form && input) {
+  form.addEventListener("submit", evt => {
+    evt.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+
+    tasks.push({
+      id: uid(),
+      text,
+      completed: false,
+      deadline: null,
+      subtasks: []
+    });
+
+    saveTasks(tasks);
+    renderList();
+    input.value = "";
+    input.focus();
+  });
+}
+
 renderList();
